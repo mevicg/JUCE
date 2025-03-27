@@ -223,6 +223,9 @@ public:
     /** @internal */
     std::unique_ptr<ComponentTraverser> createKeyboardFocusTraverser() override;
 
+    ComboBox& getFilenameBox(){return filenameBox;}
+    Button& getBrowseButton(){return *browseButton;}
+
 private:
     //==============================================================================
     void handleAsyncUpdate() override;

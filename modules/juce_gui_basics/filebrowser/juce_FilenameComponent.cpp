@@ -94,8 +94,11 @@ void FilenameComponent::setBrowseButtonText (const String& newBrowseButtonText)
 
 void FilenameComponent::lookAndFeelChanged()
 {
-    browseButton.reset();
+    std::unique_ptr<Button> oldBrowseButton = std::move( browseButton );
     browseButton.reset (getLookAndFeel().createFilenameComponentBrowseButton (browseButtonText));
+    if (oldBrowseButton)
+        oldBrowseButton->copyAllExplicitColoursTo(*browseButton);
+    oldBrowseButton.reset();
     addAndMakeVisible (browseButton.get());
     browseButton->setConnectedEdges (Button::ConnectedOnLeft);
     browseButton->onClick = [this] { showChooser(); };
